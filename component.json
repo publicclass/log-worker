@@ -9,10 +9,5 @@
   "license": "MIT",
   "scripts": [
     "index.js"
-  ],
-  "files": [
-    "log-worker.js",
-    "util.js",
-    "console.js"
   ]
 }
