@@ -14,7 +14,7 @@ requestAnimationFrame(function move(){
   var t = performance.now()
   box.style.marginLeft = x+'px';
   x = (x+1) & 511;
-  for(var i=0; i<100; i++);
+  for(var i=0; i<100; i++)
     logger.log('%s - %d: %j',id,i++,{hello:'there',num:i});              // avg: 170
     // console.log('%s - %d: %j',id,i++,{hello:'there',num:i});   // avg: 350
   tot += Math.round((performance.now() - t)*1000);
