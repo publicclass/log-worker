@@ -1,0 +1,32 @@
+<div id='box' style='width:10px; height:10px; background: red;'></div>
+<script src='build/build.js'></script>
+<script>
+var logger = require('log-worker');
+
+var id=Date.now();
+
+var tot = 0, len = 0, max = -Infinity, min = Infinity;
+
+var box = document.getElementById('box')
+  , x = 0;
+requestAnimationFrame(function move(){
+  requestAnimationFrame(move)
+  var t = performance.now()
+  box.style.marginLeft = x+'px';
+  x = (x+1) & 511;
+  for(var i=0; i<100; i++);
+    logger.log('%s - %d: %j',id,i++,{hello:'there',num:i});              // avg: 170
+    // console.log('%s - %d: %j',id,i++,{hello:'there',num:i});   // avg: 350
+  tot += Math.round((performance.now() - t)*1000);
+  len += 1;
+})
+
+interval = setInterval(function(){
+  var avg = Math.round(tot/len);
+  if( avg > max ) max = avg;
+  if( avg < min ) min = avg;
+  console.log('%s > %s < %s',min,avg,max)
+  if( len > 1000 )
+    clearInterval(interval);
+},100)
+</script>
