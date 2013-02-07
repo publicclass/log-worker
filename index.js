@@ -27,9 +27,24 @@ worker.postMessage({
   search: location.search
 })
 
+var slice = [].slice;
+
 'log info warn error dir time timeEnd trace assert'.split(' ').forEach(register)
 function register(name){
   exports[name] = function(){
-    open && worker.postMessage({type:name, args: [].slice.call(arguments) })
+    if( open ){
+      try {
+        worker.postMessage({type:name, args: slice.call(arguments) })
+      } catch(e){
+        if( e.code == e.DATA_CLONE_ERR && arguments.length ){
+          // log and try again with less arguments
+          console.log('couldn\'t log because of a data clone error')
+          exports[name].apply(null,slice.call(arguments,0,-1))
+        } else {
+          throw e;
+        }
+      }
+    }
   }
 }
+
