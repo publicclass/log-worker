@@ -9,6 +9,9 @@
 
     $ find ~/Library/Application\ Support/Google/{Chrome\ Canary,Chrome}/Default/File\ System -mmin -5 | grep -E '\d+\/\d+' | sed 's/ /\\ /g' | xargs tail -f
 
+## Use-cases
+
+  * Share the same log output from two browser tabs.
 
 
 ## Installation
@@ -17,7 +20,7 @@
 
 ## API
 
-The API follows the [Console API](http://nodejs.org/api/stdio.html) as defined in Node.js.
+  The API follows the [Console API](http://nodejs.org/api/stdio.html) as defined in Node.js.
 
 ### LogWorker.log([data], [...])
 
@@ -36,6 +39,17 @@ The API follows the [Console API](http://nodejs.org/api/stdio.html) as defined i
 ### LogWorker.trace(label)
 
 ### LogWorker.assert(expression, message)
+
+## Contribute
+
+  To build your own `index.js` you need [node.js](http://nodejs.org) and then run:
+
+    $ npm i
+    $ make
+
+  And you should have a new generated `index.js` and a `build/build.js` which will work in `test.html`.
+
+  Happy coding!
 
 ## License
 
