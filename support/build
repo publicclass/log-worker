@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+/**
+ * A little build script that takes `console.js`,
+ * `util.js` and `log-worker.js`, replaces their
+ * matched comments in `client.js` and outputs
+ * to `stdout`.
+ */
+
+var UglifyJS = require("uglify-js")
+  , fs = require('fs');
+
+var client = fs.readFileSync('./lib/client.js','utf8')
+var files = 'util.js console.js log-worker.js'.split(' ');
+files.forEach(function(file){
+  var f = UglifyJS.minify('./lib/'+file).code;
+  // var f = fs.readFileSync('./lib/'+file,'utf8');
+  var r = new RegExp('\\/\\*= *'+file+' *\\*\\/','g')
+  client = client.replace(r,wrap(f))
+})
+
+console.log(client)
+
+function wrap(s){
+  return '";'+s.replace(/"/g,'\\"').replace(/\n/g,'$$N$$').replace(/\\n/g,'\\\\n').replace(/\$\$N\$\$/g,'\\n')+'"'
+}
