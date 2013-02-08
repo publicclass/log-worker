@@ -2,14 +2,13 @@
 build: components index.js
 	@component build --dev
 
-index.js: client.js console.js log-worker.js util.js
-	cat util.js console.js log-worker.js > worker.js
-
+index.js: support/build lib/client.js lib/console.js lib/log-worker.js lib/util.js
+	support/build > index.js
 
 components: component.json
 	@component install --dev
 
 clean:
-	rm -fr build components template.js
+	rm -fr build components
 
 .PHONY: clean
